@@ -1,0 +1,90 @@
+{
+  "expo": {
+    "name": "Stickerpaw",
+    "slug": "stickerpaw",
+    "version": "1.0.0",
+    "scheme": "stickerpaw",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#FFF6EC",
+    "ios": {
+      "bundleIdentifier": "com.stickerpaw.app",
+      "supportsTablet": false,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.stickerpaw.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#FF8A5B",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "output": "single",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 220,
+          "resizeMode": "contain",
+          "backgroundColor": "#FFF6EC",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#1F1714"
+          }
+        }
+      ],
+      [
+        "expo-localization",
+        {
+          "supportsRTL": true,
+          "supportedLocales": [
+            "he",
+            "en"
+          ]
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Stickerpaw needs your photos to turn your pet into stickers. / סטיקרפאו צריכה גישה לתמונות כדי להפוך את חיית המחמד שלך לסטיקרים.",
+          "cameraPermission": "Stickerpaw uses the camera to photograph your pet. / סטיקרפאו משתמשת במצלמה כדי לצלם את חיית המחמד שלך.",
+          "microphonePermission": false
+        }
+      ],
+      [
+        "expo-secure-store",
+        {
+          "configureAndroidBackup": true,
+          "faceIDPermission": false
+        }
+      ],
+      "expo-font",
+      "expo-image",
+      "expo-sharing",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24
+          }
+        }
+      ],
+      "expo-asset"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
