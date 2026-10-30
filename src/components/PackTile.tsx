@@ -15,7 +15,8 @@ export function PackTile({ pack, onPress, width }: { pack: Pack; onPress: () => 
   const { tp, t } = useI18n();
   const count = pack.stickers.length;
   const missing = Math.max(0, WA.MIN_STICKERS - count);
-  const cover = pack.trayFile ?? pack.stickers[0]?.file;
+  // The 512px first sticker (the tray icon is only 96px and would look soft here).
+  const cover = pack.stickers[0]?.file;
   const imgSize = width - spacing.lg * 2;
 
   return (

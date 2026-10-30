@@ -96,7 +96,7 @@ export default function FinishScreen() {
           )}
         </Checker>
         {sizeKb != null ? (
-          <AppText variant="caption" color="textMuted">
+          <AppText variant="caption" color="textMuted" align="center" style={{ writingDirection: 'ltr' }}>
             {t('new.finish.size', { kb: sizeKb })}
           </AppText>
         ) : null}

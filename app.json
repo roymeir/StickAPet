@@ -58,8 +58,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Stickerpaw needs your photos to turn your pet into stickers. / סטיקרפאו צריכה גישה לתמונות כדי להפוך את חיית המחמד שלך לסטיקרים.",
-          "cameraPermission": "Stickerpaw uses the camera to photograph your pet. / סטיקרפאו משתמשת במצלמה כדי לצלם את חיית המחמד שלך.",
+          "photosPermission": "Stickerpaw needs your photos to turn your pet into stickers. / Stickerpaw צריכה גישה לתמונות כדי להפוך את חיית המחמד שלכם לסטיקרים.",
+          "cameraPermission": "Stickerpaw uses the camera to photograph your pet. / Stickerpaw משתמשת במצלמה כדי לצלם את חיית המחמד שלכם.",
           "microphonePermission": false
         }
       ],

@@ -38,6 +38,8 @@ export default function GenerateScreen() {
   const [phase, setPhase] = useState<Phase>(style.prompt ? 'painting' : 'cutting');
   const [error, setError] = useState<unknown>(null);
   const [elapsed, setElapsed] = useState(0);
+  // What "Try again" should redo: the AI request, or the cut-out of a given image.
+  const [failed, setFailed] = useState<{ step: 'paint' } | { step: 'cut'; uri: string }>({ step: 'paint' });
   const abort = useRef<AbortController | null>(null);
 
   // `*Inner` variants never set state before their first await, so they can start from the
@@ -55,6 +57,7 @@ export default function GenerateScreen() {
         useDraft.getState().set({ base: { inputUri, cutoutUri }, ...(sameBase ? {} : { strokes: [], edited: null }) });
         router.replace('/new/touchup');
       } catch (e) {
+        setFailed({ step: 'cut', uri: inputUri });
         setError(e);
         setPhase('error');
       }
@@ -67,9 +70,12 @@ export default function GenerateScreen() {
       if (!source) return;
       const controller = new AbortController();
       abort.current = controller;
+      const previous = useDraft.getState().run;
+      // Never show (or retry with) variants from an earlier style.
+      useDraft.getState().set({ run: null });
       try {
         const provider = makeProvider(await getApiKey(), settings, toFilePart);
-        if (force && run) await forgetRun(run.key, cacheStore);
+        if (force && previous) await forgetRun(previous.key, cacheStore);
         const result = await runStyle({
           photo: { uri: source.uri, mimeType: 'image/jpeg', name: 'pet.jpg' },
           photoKey: source.key,
@@ -86,13 +92,13 @@ export default function GenerateScreen() {
         } else setPhase('choosing');
       } catch (e) {
         if (e instanceof AiError && e.kind === 'cancelled') return;
+        setFailed({ step: 'paint' });
         setError(e);
         setPhase('error');
       } finally {
         abort.current = null;
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [source, style, settings, cutInner],
   );
 
@@ -142,12 +148,17 @@ export default function GenerateScreen() {
         ) : phase === 'error' ? (
           <>
             {keyProblem ? <Button label={t('home.settings')} icon="key" onPress={() => router.push('/settings')} /> : null}
-            <Button label={t('common.retry')} icon="refresh" variant={keyProblem ? 'secondary' : 'primary'} onPress={() => (style.prompt && !run ? paint() : cutAndContinue(run?.variants[0]?.uri ?? source!.uri))} />
+            <Button label={t('common.retry')} icon="refresh" variant={keyProblem ? 'secondary' : 'primary'} onPress={() => (failed.step === 'cut' ? cutAndContinue(failed.uri) : paint())} />
           </>
         ) : undefined
       }
     >
-      <StepHeader step={3} title={phase === 'choosing' ? t('new.generate.pick') : phase === 'cutting' ? t('new.generate.cutting') : t('new.generate.painting')} />
+      <StepHeader
+        step={3}
+        title={
+          phase === 'choosing' ? t('new.generate.pick') : phase === 'cutting' ? t('new.generate.cutting') : phase === 'error' ? t('common.error') : t('new.generate.painting')
+        }
+      />
 
       {phase === 'painting' || phase === 'cutting' ? (
         <View style={styles.center}>
