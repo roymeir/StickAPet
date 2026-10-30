@@ -1,0 +1,8 @@
+{
+  "name": "whatsapp-stickers",
+  "version": "1.0.0",
+  "description": "Adds sticker packs to WhatsApp: Android ContentProvider + ENABLE_STICKER_PACK intent, iOS pasteboard",
+  "main": "index.ts",
+  "license": "MIT",
+  "private": true
+}

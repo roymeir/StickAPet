@@ -81,6 +81,7 @@
           }
         }
       ],
+      "./modules/whatsapp-stickers/app.plugin.js",
       "./modules/pet-cutout/app.plugin.js",
       "expo-asset"
     ],
