@@ -1,0 +1,8 @@
+{
+  "name": "pet-cutout",
+  "version": "1.0.0",
+  "description": "On-device subject (pet) cut-out: Vision on iOS 17+, ML Kit Subject Segmentation on Android",
+  "main": "index.ts",
+  "license": "MIT",
+  "private": true
+}

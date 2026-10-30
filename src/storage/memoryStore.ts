@@ -82,11 +82,12 @@ export function createMemoryStore(
       if (cached) return cached;
       const bytes = files.get(path);
       if (!bytes) return '';
-      let url: string;
-      if (typeof Blob !== 'undefined' && typeof URL !== 'undefined' && 'createObjectURL' in URL) {
-        url = URL.createObjectURL(new Blob([bytes as BlobPart], { type: mimeForPath(path) }));
-      } else {
-        url = `data:${mimeForPath(path)};base64,${bytesToBase64(bytes)}`;
+      let url = `data:${mimeForPath(path)};base64,${bytesToBase64(bytes)}`;
+      try {
+        // Browsers: blob URLs are much cheaper than data URIs for images.
+        if (typeof document !== 'undefined') url = URL.createObjectURL(new Blob([bytes as BlobPart], { type: mimeForPath(path) }));
+      } catch {
+        // Keep the data URI.
       }
       urls.set(path, url);
       return url;

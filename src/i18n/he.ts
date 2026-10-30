@@ -90,7 +90,7 @@ export const he: Strings = {
   'new.finish.cornerEmoji': "אימוג'י בפינה",
   'new.finish.tags': "תגיות אימוג'י לוואטסאפ",
   'new.finish.tagsHint': "בחרו 1–3 אימוג'ים. וואטסאפ משתמשת בהם כדי למצוא את הסטיקר.",
-  'new.finish.size': 'WebP ‏512×512 · ‏{{kb}} KB',
+  'new.finish.size': '512×512 WebP · {{kb}}KB',
   'new.finish.save': 'שמירה לחבילה',
   'new.finish.share': 'שיתוף הסטיקר',
   'new.finish.rendering': 'מעבדים…',
@@ -177,6 +177,7 @@ export const he: Strings = {
   'settings.selfTest': 'בדיקה עצמית של התהליך',
   'settings.selfTestBody': 'גוזר תמונת בדיקה מובנית במכשיר ובודק את הייצוא לוואטסאפ.',
   'settings.selfTestRunning': 'מריצים בדיקה…',
+  'settings.loadDemo': 'טעינת חבילות לדוגמה (למפתחים)',
   'settings.version': 'גרסה {{version}}',
 
   'error.missingKey': 'כדי להשתמש בסגנונות AI, הוסיפו מפתח API של OpenAI בהגדרות.',

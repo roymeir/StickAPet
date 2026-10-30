@@ -178,6 +178,7 @@ export const en = {
   'settings.selfTest': 'Run pipeline self-test',
   'settings.selfTestBody': 'Cuts out a bundled test photo on this device and checks the WhatsApp export.',
   'settings.selfTestRunning': 'Running self-test…',
+  'settings.loadDemo': 'Load demo packs (developer)',
   'settings.version': 'Version {{version}}',
 
   'error.missingKey': 'Add your OpenAI API key in Settings to use AI styles.',

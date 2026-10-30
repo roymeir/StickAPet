@@ -81,6 +81,7 @@
           }
         }
       ],
+      "./modules/pet-cutout/app.plugin.js",
       "expo-asset"
     ],
     "experiments": {

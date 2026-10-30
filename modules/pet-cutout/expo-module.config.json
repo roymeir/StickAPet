@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["PetCutoutModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.petcutout.PetCutoutModule"]
+  }
+}
