@@ -4,8 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import com.google.android.gms.common.moduleinstall.ModuleInstall
-import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
 import com.google.mlkit.common.MlKitException
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.segmentation.subject.SubjectSegmentation
@@ -112,25 +110,20 @@ class PetCutoutModule : Module() {
     }
   }
 
+  /**
+   * Runs a tiny segmentation so Google Play services starts fetching the unbundled model if it
+   * isn't on the device yet (the manifest meta-data covers Play Store installs; this covers
+   * sideloaded APKs). Reports whether the model is ready.
+   */
   private fun requestModelDownload(done: (Boolean) -> Unit) {
     val segmenter = newSegmenter()
-    val client = ModuleInstall.getClient(context)
-    client.areModulesAvailable(segmenter)
-      .addOnSuccessListener { response ->
-        if (response.areModulesAvailable()) {
-          segmenter.close()
-          done(true)
-        } else {
-          client.installModules(ModuleInstallRequest.newBuilder().addApi(segmenter).build())
-            .addOnCompleteListener {
-              segmenter.close()
-              done(false)
-            }
-        }
-      }
-      .addOnFailureListener {
+    val probe = Bitmap.createBitmap(32, 32, Bitmap.Config.ARGB_8888)
+    segmenter.process(InputImage.fromBitmap(probe, 0))
+      .addOnCompleteListener(worker) { task ->
         segmenter.close()
-        done(false)
+        probe.recycle()
+        val e = task.exception
+        done(e == null || !(e is MlKitException && e.errorCode == MlKitException.UNAVAILABLE))
       }
   }
 
